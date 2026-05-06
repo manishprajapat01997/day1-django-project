@@ -711,3 +711,4 @@ python manage.py runserver
 URL
 http://127.0.0.1:8000/add/
 
+https://docs.google.com/document/d/1_9yys3SgZNjHMQLd-ADbo78wHJ2eD-RFqVdir0CpVxc/edit?tab=t.0
