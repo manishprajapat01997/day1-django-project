@@ -1,0 +1,713 @@
+Django 5 CRUD Project Complete Notes
+1. Python Virtual Environment
+A Python Virtual Environment is an isolated workspace used to install project-specific packages and dependencies.
+Benefits:
+Keeps dependencies separate
+Prevents version conflicts
+Keeps projects clean
+Allows different versions for different projects
+
+Windows Commands
+Create Environment
+python -m venv venv
+
+Activate Environment
+venv\Scripts\activate
+
+Deactivate Environment
+deactivate
+
+
+Mac/Linux Commands
+Create Environment
+python3 -m venv venv
+
+Activate Environment
+source venv/bin/activate
+
+Deactivate Environment
+deactivate
+
+
+2. Django
+Django is a high-level Python web framework used to build secure, scalable, and fast web applications.
+Features:
+Built-in authentication
+Built-in admin panel
+ORM support
+Security features
+Fast development
+Install Django 5:
+Windows
+pip install "django>=5,<6"
+
+Mac/Linux
+pip3 install "django>=5,<6"
+
+Check Version:  python -m django --version
+3. Django Project Structure
+A Django project contains all project settings and configurations.
+Example Structure:
+project/
+│
+├── manage.py
+├── project_name/
+│   ├── settings.py
+│   ├── urls.py
+│   ├── wsgi.py
+│   └── asgi.py
+
+Important Files:
+settings.py → Project settings
+urls.py → URL routing
+manage.py → Command-line utility
+wsgi.py → Web server gateway
+asgi.py → Async server gateway
+
+4. Django App
+A Django app is a module that handles a specific functionality.
+Examples:
+User App
+Product App
+Employee App
+Payment App
+Create App:
+Windows
+python manage.py startapp app1
+
+Mac/Linux
+python3 manage.py startapp app1
+
+
+Install Crispy Forms + Bootstrap 5 
+Windows
+pip install django-crispy-forms crispy-bootstrap5
+Mac/Linux
+pip3 install django-crispy-forms crispy-bootstrap5
+
+
+5. Models in Django
+Models are Python classes used to create database tables.
+Each model represents one table in the database.
+Example:
+from django.db import models
+
+class Employee(models.Model):
+    name = models.CharField(max_length=100)
+    email = models.EmailField()
+
+Purpose of Models:
+Store data
+Interact with database
+Perform CRUD operations
+
+
+6. Why forms.py is Used
+forms.py is used to handle user input and validations.
+Benefits:
+Easy form creation
+Built-in validation
+Cleaner code
+Secure form handling
+Example:
+from django import forms
+from .models import Employee
+
+class EmployeeForm(forms.ModelForm):
+
+    class Meta:
+        model = Employee
+        fields = '__all__'
+
+
+What is ModelForm?
+ModelForm automatically creates a form using model fields.
+
+What is class Meta?
+Meta is an inner class used to configure the form.
+It tells Django:
+Which model to use
+Which fields to include
+Which fields to exclude
+Custom widgets
+Labels
+Validations
+model = Employee
+model = Employee
+This tells Django:
+ “Create form fields using Employee model.”
+
+fields = 'all'
+fields = '__all__'
+Meaning:
+ Include ALL model fields in the form.
+
+Specific Fields
+fields = ['name', 'email']
+Only these fields will appear:
+name
+email
+city will NOT appear.
+exclude
+exclude is opposite of fields.
+It removes specific fields from the form.
+Example:
+class Meta:
+   model = Employee
+   exclude = ['city']
+Meaning:
+Show all fields
+EXCEPT city
+Generated fields:
+name
+email
+Not shown:
+city
+
+Difference Between fields and exclude
+Option
+Meaning
+fields = 'all'
+Include all fields
+fields = ['name']
+Include selected fields
+exclude = ['city']
+Exclude selected fields
+
+
+
+Important Rule
+ Do NOT use both together:
+fields = '__all__'
+exclude = ['city']
+This will raise error.
+Use ONLY one:
+either fields
+or exclude
+Why forms.py is Useful
+Benefits:
+Automatic form generation
+Validation support
+Cleaner code
+Easy database connection
+Secure form handling
+
+Form Flow in Django
+User fills form
+Form sends data to views.py
+forms.py validates data
+models.py saves data
+Database stores data
+
+
+
+7. What views.py Does
+views.py contains the business logic of the application.
+Responsibilities:
+Receive requests
+Process data
+Interact with models
+Return responses
+Render templates
+Example:
+from django.shortcuts import render
+
+
+def home(request):
+    return render(request, 'home.html')
+
+
+8. What URLs Are
+URLs route user requests to specific views.
+Example:
+from django.urls import path
+from .views import *
+
+urlpatterns = [
+    path('', home),
+]
+
+Purpose:
+Connect browser requests to views
+Manage application routes
+
+9. What Templates Are
+Templates are HTML files used to display frontend UI.
+Templates allow:
+Dynamic content rendering
+User interface creation
+Data display
+Example:
+<h1>{{ name }}</h1>
+
+
+
+
+10. Bootstrap 5
+Bootstrap 5 is a CSS framework used to create responsive and attractive user interfaces.
+Features:
+Responsive Design
+Navbar
+Buttons
+Cards
+Tables
+Grid System
+Bootstrap CDN:
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+
+
+11. Crispy Forms
+Crispy Forms is a Django package used to render beautiful Bootstrap forms.
+Benefits:
+Attractive form UI
+Less HTML code
+Easy Bootstrap integration
+Installation:
+Windows
+pip install django-crispy-forms crispy-bootstrap5
+
+Mac/Linux
+pip3 install django-crispy-forms crispy-bootstrap5
+
+Configuration:
+INSTALLED_APPS = [
+    'crispy_forms',
+    'crispy_bootstrap5',
+]
+
+CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap5"
+CRISPY_TEMPLATE_PACK = "bootstrap5"
+
+Usage:
+{% load crispy_forms_tags %}
+
+{{ form|crispy }}
+
+
+12. CRUD Operations
+CRUD stands for:
+Operation
+Meaning
+Create
+Add data
+Read
+Show data
+Update
+Modify data
+Delete
+Remove data
+
+CRUD Flow in Django:
+User submits form
+views.py receives request
+forms.py validates data
+models.py stores data in database
+Template displays updated data
+
+13. Migrations
+Migrations are used to create and update database tables.
+Commands:
+Windows
+python manage.py makemigrations
+python manage.py migrate
+
+Mac/Linux
+python3 manage.py makemigrations
+python3 manage.py migrate
+
+
+14. Admin Panel
+Django provides a built-in admin panel to manage application data.
+Create Superuser:
+Windows
+python manage.py createsuperuser
+
+Mac/Linux
+python3 manage.py createsuperuser
+
+Admin URL:
+http://127.0.0.1:8000/admin/
+
+
+15. Run Server
+Windows
+python manage.py runserver
+
+Mac/Linux
+python3 manage.py runserver
+
+
+16. Request Response Flow
+User opens URL in browser
+Request goes to Django
+urls.py routes request to view
+views.py executes logic
+models.py interacts with database
+Template renders HTML
+Response is sent to user
+
+17. Complete CRUD Project Flow
+Step 1 → Create Virtual Environment
+Step 2 → Install Django 5
+Step 3 → Create Project
+Step 4 → Create App
+Step 5 → Register App in settings.py
+Step 6 → Create Model
+Step 7 → Run Migrations
+Step 8 → Create Form
+Step 9 → Create Views
+Step 10 → Create URLs
+Step 11 → Create Templates
+Step 12 → Run Server
+Step 13 → Add Data
+Step 14 → Show Data
+Step 15 → Update Data
+Step 16 → Delete Data
+
+18. Important Django Commands
+Command
+Purpose
+startproject
+Create project
+startapp
+Create app
+makemigrations
+Create migration files
+migrate
+Update database
+runserver
+Run development server
+createsuperuser
+Create admin user
+
+
+
+
+19. Interview Questions
+Q1. What is Django?
+A high-level Python web framework.
+Q2. What is ORM?
+ORM converts Python code into SQL queries.
+Q3. What is a Model?
+A database table representation.
+Q4. What is a View?
+Business logic handler.
+Q5. What is a Template?
+Frontend HTML page.
+Q6. What are Migrations?
+Database update mechanism.
+Q7. Why is CSRF Token used?
+For security against fake requests.
+
+20. Final Summary
+Django is a powerful Python framework used for backend web development.
+Advantages:
+Fast development
+Secure framework
+Built-in admin panel
+Easy ORM
+Simple CRUD operations
+Bootstrap integration
+Beautiful forms using Crispy Forms
+
+Project Structure
+proj1/
+│
+├── manage.py
+├── proj1/
+│   ├── settings.py
+│   ├── urls.py
+│
+├── app1/
+│   ├── admin.py
+│   ├── models.py
+│   ├── forms.py
+│   ├── views.py
+│   ├── urls.py
+│
+├── templates/
+│   ├── layout.html
+│   └── app1/
+│       ├── AddEmployee.html
+│       └── ShowEmployee.html
+ 
+
+1. Install Packages
+pip install django
+pip install django-crispy-forms
+pip install crispy-bootstrap5
+
+2. Create Project
+django-admin startproject proj1
+cd proj1
+python manage.py startapp app1
+3. settings.py
+INSTALLED_APPS = [
+   'django.contrib.admin',
+   'django.contrib.auth',
+   'django.contrib.contenttypes',
+   'django.contrib.sessions',
+   'django.contrib.messages',
+   'django.contrib.staticfiles',
+
+   'app1',
+   'crispy_forms',
+   'crispy_bootstrap5',
+]
+
+CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap5"
+CRISPY_TEMPLATE_PACK = "bootstrap5"
+
+TEMPLATES = [
+   {
+       'DIRS': ['templates'],
+   },
+]
+
+4. models.py
+from django.db import models
+
+class Employee(models.Model):
+   eid = models.IntegerField()
+   name = models.CharField(max_length=100)
+   dob = models.DateField()
+   email = models.EmailField()
+   city = models.CharField(max_length=100)
+   salary = models.FloatField()
+
+   def __str__(self):
+       return self.name
+
+5. forms.py
+from django import forms
+from .models import Employee
+
+class EmployeeForm(forms.ModelForm):
+
+   class Meta:
+       model = Employee
+       fields = "__all__"
+
+       widgets = {
+           'eid': forms.NumberInput(attrs={'class':'form-control'}),
+           'name': forms.TextInput(attrs={'class':'form-control'}),
+           'dob': forms.DateInput(attrs={'class':'form-control','type':'date'}),
+           'email': forms.EmailInput(attrs={'class':'form-control'}),
+           'city': forms.TextInput(attrs={'class':'form-control'}),
+           'salary': forms.NumberInput(attrs={'class':'form-control'}),
+       }
+
+6. views.py
+from django.shortcuts import render, redirect
+from .forms import EmployeeForm
+from .models import Employee
+
+
+def add_employee(request):
+
+   form = EmployeeForm()
+
+   if request.method == 'POST':
+       form = EmployeeForm(request.POST)
+
+       if form.is_valid():
+           form.save()
+           return redirect('show_url')
+
+   template_name = 'app1/AddEmployee.html'
+   context = {'form': form}
+
+   return render(request, template_name, context)
+
+
+def show_employee(request):
+
+   data = Employee.objects.all()
+
+   template_name = 'app1/ShowEmployee.html'
+   context = {'data': data}
+
+   return render(request, template_name, context)
+
+
+def update_employee(request, pk):
+
+   obj = Employee.objects.get(id=pk)
+
+   form = EmployeeForm(instance=obj)
+
+   if request.method == 'POST':
+       form = EmployeeForm(request.POST, instance=obj)
+
+       if form.is_valid():
+           form.save()
+           return redirect('show_url')
+
+   template_name = 'app1/AddEmployee.html'
+   context = {'form': form}
+
+   return render(request, template_name, context)
+
+
+def delete_employee(request, pk):
+
+   obj = Employee.objects.get(id=pk)
+   obj.delete()
+
+   return redirect('show_url')
+
+7. app1/urls.py
+from django.urls import path
+from .views import *
+
+urlpatterns = [
+
+   path('add/', add_employee, name='add_url'),
+   path('show/', show_employee, name='show_url'),
+   path('update/<int:pk>/', update_employee, name='update_url'),
+   path('delete/<int:pk>/', delete_employee, name='delete_url'),
+]
+
+8. Project urls.py
+from django.contrib import admin
+from django.urls import path, include
+
+urlpatterns = [
+   path('admin/', admin.site.urls),
+
+   path('', include('app1.urls')),
+]
+
+9. layout.html
+<!DOCTYPE html>
+<html>
+<head>
+
+   <title>Django CRUD</title>
+
+   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+
+</head>
+<body>
+
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+
+   <div class="container-fluid">
+
+       <a class="navbar-brand" href="#">CRUD</a>
+
+       <div>
+           <ul class="navbar-nav">
+
+               <li class="nav-item">
+                   <a class="nav-link" href="{% url 'add_url' %}">Add Employee</a>
+               </li>
+
+               <li class="nav-item">
+                   <a class="nav-link" href="{% url 'show_url' %}">Show Employee</a>
+               </li>
+
+           </ul>
+       </div>
+
+   </div>
+
+</nav>
+
+<div class="container mt-4">
+
+   {% block content %}
+
+   {% endblock %}
+
+</div>
+
+</body>
+</html>
+
+10. AddEmployee.html
+{% extends 'layout.html' %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+
+<h2 class="text-center">ADD EMPLOYEE</h2>
+
+<form method="POST">
+
+   {% csrf_token %}
+
+   {{ form|crispy }}
+
+   <input type="submit" value="ADD EMPLOYEE" class="btn btn-success">
+
+   <input type="reset" value="RESET" class="btn btn-warning float-end">
+
+</form>
+
+{% endblock %}
+
+11. ShowEmployee.html
+{% extends 'layout.html' %}
+
+{% block content %}
+
+<h2 class="text-center">SHOW EMPLOYEE</h2>
+
+<table class="table table-bordered table-dark">
+
+   <thead>
+
+   <tr>
+       <th>Eid</th>
+       <th>Name</th>
+       <th>DOB</th>
+       <th>Email</th>
+       <th>City</th>
+       <th>Salary</th>
+       <th>Action</th>
+   </tr>
+
+   </thead>
+
+   <tbody>
+
+   {% for i in data %}
+
+   <tr>
+
+       <td>{{ i.eid }}</td>
+       <td>{{ i.name }}</td>
+       <td>{{ i.dob }}</td>
+       <td>{{ i.email }}</td>
+       <td>{{ i.city }}</td>
+       <td>{{ i.salary }}</td>
+
+       <td>
+
+           <a href="{% url 'update_url' i.id %}" class="btn btn-warning btn-sm">UPDATE</a>
+
+           <a href="{% url 'delete_url' i.id %}" class="btn btn-danger btn-sm">DELETE</a>
+
+       </td>
+
+   </tr>
+
+   {% endfor %}
+
+   </tbody>
+
+</table>
+
+{% endblock %}
+
+12. Run Migration
+python manage.py makemigrations
+python manage.py migrate
+
+13. Run Server
+python manage.py runserver
+
+URL
+http://127.0.0.1:8000/add/
+
