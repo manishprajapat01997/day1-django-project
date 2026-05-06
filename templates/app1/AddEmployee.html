@@ -1,0 +1,20 @@
+{% extends 'layout.html' %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+
+<h2 class="text-center">ADD EMPLOYEE</h2>
+
+<form method="POST">
+
+    {% csrf_token %}
+
+    {{ form|crispy }}
+
+    <input type="submit" value="ADD EMPLOYEE" class="btn btn-success">
+
+    <input type="reset" value="RESET" class="btn btn-warning float-end">
+
+</form>
+
+{% endblock %}
